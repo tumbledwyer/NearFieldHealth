@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -70,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     if(myTag ==null) {
                         Toast.makeText(context, ERROR_DETECTED, Toast.LENGTH_LONG).show();
                     } else {
-                        write(message.getText().toString(), myTag);
+                        //write(message.getText().toString(), myTag);
+                        write(GetPatient(), myTag);
                         Toast.makeText(context, WRITE_SUCCESS, Toast.LENGTH_LONG ).show();
                     }
                 } catch (IOException e) {
@@ -87,8 +90,16 @@ public class MainActivity extends AppCompatActivity {
         handleIntent(getIntent());
     }
 
-    private void write(String text, Tag tag) throws IOException, FormatException {
-        NdefRecord[] records = { createRecord(text) };
+    private Patient GetPatient(){
+        Patient patient = new Patient();
+        patient.Name = message.getText().toString();
+        patient.Married = false;
+        patient.Age = 69;
+        return patient;
+    }
+
+    private void write(Patient patient, Tag tag) throws IOException, FormatException {
+        NdefRecord[] records = { createRecord(patient) };
         NdefMessage message = new NdefMessage(records);
         // Get an instance of Ndef for the tag.
         Ndef ndef = Ndef.get(tag);
@@ -100,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         ndef.close();
     }
 
-    private NdefRecord createRecord(String text) throws UnsupportedEncodingException {
+    private NdefRecord createRecord(Patient patient) throws UnsupportedEncodingException {
         String lang       = "en";
-        byte[] textBytes  = text.getBytes();
+        byte[] textBytes  = SerializationUtils.serialize(patient);
         byte[] langBytes  = lang.getBytes("UTF-8");
         int    langLength = langBytes.length;
         int    textLength = textBytes.length;
@@ -257,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
          */
 
             byte[] payload = record.getPayload();
+            //todo extract payload logic
+
 
             // Get the Text Encoding
             String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
@@ -266,10 +279,15 @@ public class MainActivity extends AppCompatActivity {
 
             // String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
             // e.g. "en"
+            int payloadLength = payload.length - languageCodeLength -1;
+            byte[] myBytes = new byte[payloadLength];
+            System.arraycopy(payload, languageCodeLength+1, myBytes, 0, payloadLength);
+
+            Patient patient = SerializationUtils.deserialize(myBytes);
 
             // Get the Text
-            return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
-            //return new String(payload, textEncoding);
+            //return new String(payload, languageCodeLength + 1, payloadLength, textEncoding);
+            return patient.Name;
         }
 
         @Override
