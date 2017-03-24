@@ -8,6 +8,8 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.IOException;
@@ -25,10 +27,8 @@ public class NfcWriter {
     private Context context;
     private Tag myTag;
 
-    public NfcWriter(Context context, Tag myTag) {
-
+    public NfcWriter(Context context) {
         this.context = context;
-        this.myTag = myTag;
     }
 
     public void tryWrite(Patient patient) {
@@ -63,7 +63,9 @@ public class NfcWriter {
 
     private NdefRecord createRecord(Patient patient) throws UnsupportedEncodingException {
         String lang       = "en";
-        byte[] textBytes  = SerializationUtils.serialize(patient);
+        Gson gson = new Gson();
+        //byte[] textBytes  = SerializationUtils.serialize(patient);
+        byte[] textBytes  = gson.toJson(patient).getBytes();
         byte[] langBytes  = lang.getBytes("UTF-8");
         int    langLength = langBytes.length;
         int    textLength = textBytes.length;
@@ -79,5 +81,10 @@ public class NfcWriter {
         NdefRecord recordNFC = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,  NdefRecord.RTD_TEXT,  new byte[0], payload);
 
         return recordNFC;
+    }
+
+    //todo not a great solution
+    public void setTag(Tag myTag) {
+        this.myTag = myTag;
     }
 }

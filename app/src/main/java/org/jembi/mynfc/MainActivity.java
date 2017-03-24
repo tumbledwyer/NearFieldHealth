@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         context = this;
 
         nfcReader = new NfcReader(nfcOutput);
-        nfcWriter = new NfcWriter(context, myTag);
+        nfcWriter = new NfcWriter(context);
 
         if (nfcAdapter == null) {
             // Stop here, we definitely need NFC
@@ -97,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
          *
          * In our case this method gets called, when the user attaches a Tag to the device.
          */
-        //if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+        if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())){
             myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        //}
+            nfcWriter.setTag(myTag);
+        }
         nfcReader.handleIntent(intent);
     }
 }

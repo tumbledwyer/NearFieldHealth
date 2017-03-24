@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.SerializationUtils;
+import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -67,7 +67,6 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
         byte[] payload = record.getPayload();
         //todo extract payload logic
 
-
         // Get the Text Encoding
         String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
 
@@ -76,14 +75,12 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
         // String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
         // e.g. "en"
-        int payloadLength = payload.length - languageCodeLength -1;
-        byte[] myBytes = new byte[payloadLength];
-        System.arraycopy(payload, languageCodeLength+1, myBytes, 0, payloadLength);
-
-        Patient patient = SerializationUtils.deserialize(myBytes);
 
         // Get the Text
-        //return new String(payload, languageCodeLength + 1, payloadLength, textEncoding);
+        String jsonPatient = new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
+        Gson gson = new Gson();
+        Patient patient = gson.fromJson(jsonPatient, Patient.class);
+
         return patient.Name;
     }
 
