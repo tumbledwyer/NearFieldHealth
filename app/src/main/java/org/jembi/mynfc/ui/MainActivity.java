@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import org.jembi.mynfc.JsonConverter;
 import org.jembi.mynfc.models.HealthCareUser;
 import org.jembi.mynfc.nfcUtils.NfcReadEvent;
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         nfcOutput = (TextView) findViewById(R.id.textView_explanation);
         btnWrite = (Button) findViewById(R.id.writeNfc);
         message = (TextView) findViewById(R.id.inputBox);
@@ -44,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         context = this;
 
-        NfcToken nfcToken = new NfcToken(this);
-        nfcReader = new NfcReader(nfcToken);
+        nfcReader = new NfcReader(new NfcToken(this));
         nfcWriter = new NfcWriter(context);
 
 
@@ -121,8 +119,10 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
     public void onReadComplete(String data) {
         HealthCareUser healthCareUser = JsonConverter.convertToHealthCareUser(data);
         if(healthCareUser.Role.equals("Nurse")){
-            nfcOutput.setText(data);
-        }else {
+            nfcOutput.setText("Hello " + healthCareUser.Name);
+            Intent intent = new Intent(this, HcwPortalActivity.class);
+            startActivity(intent);
+        } else {
             nfcOutput.setText("Nort bru");
         }
     }

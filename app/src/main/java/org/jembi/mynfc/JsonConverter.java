@@ -13,10 +13,14 @@ public class JsonConverter {
         return gson.fromJson(rawJson, HealthCareUser.class);
     }
 
+    public static String convertToJson(Object object) {
+        CreateGson();
+        return gson.toJson(object);
+    }
+
     private static void CreateGson() {
         if(gson == null){
             gson = new Gson();
         }
     }
-
 }

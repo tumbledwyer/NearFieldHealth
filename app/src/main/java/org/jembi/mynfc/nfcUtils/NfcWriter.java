@@ -8,8 +8,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
+import org.jembi.mynfc.JsonConverter;
 import org.jembi.mynfc.models.Patient;
 
 import java.io.IOException;
@@ -58,10 +57,8 @@ public class NfcWriter {
     }
 
     private NdefRecord createRecord(Patient patient) throws UnsupportedEncodingException {
-        Gson gson = new Gson();
-
         String lang       = "en";
-        byte[] textBytes  = gson.toJson(patient).getBytes();
+        byte[] textBytes  = JsonConverter.convertToJson(patient).getBytes();
         byte[] langBytes  = lang.getBytes("UTF-8");
         int    langLength = langBytes.length;
         int    textLength = textBytes.length;
