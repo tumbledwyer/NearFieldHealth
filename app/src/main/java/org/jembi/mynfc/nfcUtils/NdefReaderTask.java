@@ -14,16 +14,12 @@ import org.jembi.mynfc.models.Patient;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-/**
- * Created by barry on 2017/03/23.
- */
-
-public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
+class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
     private static final String TAG = "NfcDemo";
     private NfcToken token;
 
-    public NdefReaderTask(NfcToken token){
+    NdefReaderTask(NfcToken token){
 
         this.token = token;
     }
@@ -82,13 +78,13 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
         Gson gson = new Gson();
         Patient patient = gson.fromJson(jsonPatient, Patient.class);
 
-        return patient.Name;
+        return jsonPatient;
     }
 
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {
-            token.write("Read content: " + result);
+            token.write(result);
         }
     }
 }

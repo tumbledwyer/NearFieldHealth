@@ -9,10 +9,6 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.util.Log;
 
-/**
- * Created by barry on 2017/03/23.
- */
-
 public class NfcReader {
 
     private static final String TAG = "NfcDemo";
@@ -23,7 +19,7 @@ public class NfcReader {
         this.token = token;
     }
 
-    public static final String MIME_TEXT_PLAIN = "text/plain";
+    private static final String MIME_TEXT_PLAIN = "text/plain";
     /**
      * @param activity The corresponding {@link Activity} requesting the foreground dispatch.
      * @param adapter The {@link NfcAdapter} used for the foreground dispatch.

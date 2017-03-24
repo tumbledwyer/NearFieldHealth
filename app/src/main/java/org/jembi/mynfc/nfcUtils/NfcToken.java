@@ -1,11 +1,5 @@
 package org.jembi.mynfc.nfcUtils;
 
-import org.jembi.mynfc.nfcUtils.NfcReadEvent;
-
-/**
- * Created by barry on 2017/03/24.
- */
-
 //todo think of a better name
 public class NfcToken {
 

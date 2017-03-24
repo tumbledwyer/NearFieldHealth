@@ -58,9 +58,9 @@ public class NfcWriter {
     }
 
     private NdefRecord createRecord(Patient patient) throws UnsupportedEncodingException {
-        String lang       = "en";
         Gson gson = new Gson();
 
+        String lang       = "en";
         byte[] textBytes  = gson.toJson(patient).getBytes();
         byte[] langBytes  = lang.getBytes("UTF-8");
         int    langLength = langBytes.length;

@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.jembi.mynfc.JsonConverter;
+import org.jembi.mynfc.models.HealthCareUser;
 import org.jembi.mynfc.nfcUtils.NfcReadEvent;
 import org.jembi.mynfc.nfcUtils.NfcReader;
 import org.jembi.mynfc.nfcUtils.NfcToken;
@@ -106,17 +110,20 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
          *
          * In our case this method gets called, when the user attaches a Tag to the device.
          */
-        if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())){
-            myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            nfcWriter.setTag(myTag);
-            nfcReader.handleIntent(intent);
-        }
+        if(!NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) return;
+
+        myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        nfcWriter.setTag(myTag);
+        nfcReader.handleIntent(intent);
     }
 
     @Override
     public void onReadComplete(String data) {
-        //todo check role and continue or not
-
-        nfcOutput.setText(data);
+        HealthCareUser healthCareUser = JsonConverter.convertToHealthCareUser(data);
+        if(healthCareUser.Role.equals("Nurse")){
+            nfcOutput.setText(data);
+        }else {
+            nfcOutput.setText("Nort bru");
+        }
     }
 }
