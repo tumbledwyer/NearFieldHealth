@@ -16,11 +16,12 @@ import android.widget.TextView;
 
 public class NfcReader {
 
-    TextView nfcOutput;
     public static final String TAG = "NfcDemo";
+    private NfcToken token;
 
-    public NfcReader(TextView output){
-        nfcOutput = output;
+    public NfcReader(NfcToken token){
+
+        this.token = token;
     }
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
@@ -66,7 +67,7 @@ public class NfcReader {
             if (MIME_TEXT_PLAIN.equals(type)) {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                new NdefReaderTask(nfcOutput).execute(tag);
+                new NdefReaderTask(token).execute(tag);
 
             } else {
                 Log.d(TAG, "Wrong mime type: " + type);
@@ -80,7 +81,7 @@ public class NfcReader {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    new NdefReaderTask(nfcOutput).execute(tag);
+                    new NdefReaderTask(token).execute(tag);
                     break;
                 }
             }

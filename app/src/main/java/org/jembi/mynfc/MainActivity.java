@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jembi.mynfc.models.Patient;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
     private TextView nfcOutput;
     private NfcAdapter nfcAdapter;
@@ -34,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         context = this;
 
-        nfcReader = new NfcReader(nfcOutput);
+        NfcToken nfcToken = new NfcToken(this);
+        nfcReader = new NfcReader(nfcToken);
         nfcWriter = new NfcWriter(context);
+
 
         if (nfcAdapter == null) {
             // Stop here, we definitely need NFC
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         patient.Name = message.getText().toString();
         patient.Married = false;
         patient.Age = 69;
+        patient.Role = "Nurse";
         return patient;
     }
 
@@ -102,5 +106,10 @@ public class MainActivity extends AppCompatActivity {
             nfcWriter.setTag(myTag);
         }
         nfcReader.handleIntent(intent);
+    }
+
+    @Override
+    public void onReadComplete(String data) {
+        nfcOutput.setText(data);
     }
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.jembi.mynfc.models.Patient;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
@@ -20,11 +22,11 @@ import java.util.Arrays;
 public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
     public static final String TAG = "NfcDemo";
+    private NfcToken token;
 
-    TextView nfcOutput;
+    public NdefReaderTask(NfcToken token){
 
-    public NdefReaderTask(TextView output){
-        nfcOutput = output;
+        this.token = token;
     }
 
     @Override
@@ -87,8 +89,7 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {
-            //todo a callback of some sort should go here
-            nfcOutput.setText("Read content: " + result);
+            token.write("Read content: " + result);
         }
     }
 }
