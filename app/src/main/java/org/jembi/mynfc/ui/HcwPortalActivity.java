@@ -1,7 +1,9 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import org.jembi.mynfc.R;
 
 public class HcwPortalActivity extends AppCompatActivity {
 

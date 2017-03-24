@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.nfcUtils;
 
 /**
  * Created by barry on 2017/03/24.

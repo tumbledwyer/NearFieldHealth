@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jembi.mynfc.nfcUtils.NfcReadEvent;
+import org.jembi.mynfc.nfcUtils.NfcReader;
+import org.jembi.mynfc.nfcUtils.NfcToken;
+import org.jembi.mynfc.nfcUtils.NfcWriter;
+import org.jembi.mynfc.R;
 import org.jembi.mynfc.models.Patient;
 
 public class MainActivity extends AppCompatActivity implements NfcReadEvent {
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         if (!nfcAdapter.isEnabled()) {
             nfcOutput.setText("NFC is disabled.");
         } else {
-            nfcOutput.setText("pew pew");
+            nfcOutput.setText("Waiting for NFC chip...");
         }
 
         btnWrite.setOnClickListener(new View.OnClickListener()
@@ -104,12 +109,14 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())){
             myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             nfcWriter.setTag(myTag);
+            nfcReader.handleIntent(intent);
         }
-        nfcReader.handleIntent(intent);
     }
 
     @Override
     public void onReadComplete(String data) {
+        //todo check role and continue or not
+
         nfcOutput.setText(data);
     }
 }

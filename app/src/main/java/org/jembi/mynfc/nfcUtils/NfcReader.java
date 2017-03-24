@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.nfcUtils;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -8,7 +8,6 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.util.Log;
-import android.widget.TextView;
 
 /**
  * Created by barry on 2017/03/23.
@@ -16,7 +15,7 @@ import android.widget.TextView;
 
 public class NfcReader {
 
-    public static final String TAG = "NfcDemo";
+    private static final String TAG = "NfcDemo";
     private NfcToken token;
 
     public NfcReader(NfcToken token){

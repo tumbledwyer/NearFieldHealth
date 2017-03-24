@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.nfcUtils;
 
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -6,7 +6,6 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -21,7 +20,7 @@ import java.util.Arrays;
 
 public class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
-    public static final String TAG = "NfcDemo";
+    private static final String TAG = "NfcDemo";
     private NfcToken token;
 
     public NdefReaderTask(NfcToken token){

@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.mynfc.nfcUtils;
 
 import android.content.Context;
 import android.nfc.FormatException;
@@ -15,15 +15,11 @@ import org.jembi.mynfc.models.Patient;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by barry on 2017/03/23.
- */
-
 public class NfcWriter {
 
-    public static final String ERROR_DETECTED = "No NFC tag detected!";
-    public static final String WRITE_SUCCESS = "Text written to the NFC tag successfully!";
-    public static final String WRITE_ERROR = "Error during writing, is the NFC tag close enough to your device?";
+    private static final String ERROR_DETECTED = "No NFC tag detected!";
+    private static final String WRITE_SUCCESS = "Text written to the NFC tag successfully!";
+    private static final String WRITE_ERROR = "Error during writing, is the NFC tag close enough to your device?";
     private Context context;
     private Tag myTag;
 
@@ -64,7 +60,7 @@ public class NfcWriter {
     private NdefRecord createRecord(Patient patient) throws UnsupportedEncodingException {
         String lang       = "en";
         Gson gson = new Gson();
-        //byte[] textBytes  = SerializationUtils.serialize(patient);
+
         byte[] textBytes  = gson.toJson(patient).getBytes();
         byte[] langBytes  = lang.getBytes("UTF-8");
         int    langLength = langBytes.length;
