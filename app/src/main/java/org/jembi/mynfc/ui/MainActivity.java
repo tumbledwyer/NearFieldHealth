@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         patient.Name = message.getText().toString();
         patient.Married = false;
         patient.Age = 69;
-        patient.Role = "Nurse";
+        patient.Role = "Patient";
         return patient;
     }
 
@@ -101,13 +101,6 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        /**
-         * This method gets called, when a new Intent gets associated with the current activity instance.
-         * Instead of creating a new activity, onNewIntent will be called. For more information have a look
-         * at the documentation.
-         *
-         * In our case this method gets called, when the user attaches a Tag to the device.
-         */
         if(!NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) return;
 
         myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
