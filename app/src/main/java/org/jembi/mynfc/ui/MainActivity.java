@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         if(healthCareUser.Role.equals("Nurse")){
             nfcOutput.setText("Hello " + healthCareUser.Name);
             Intent intent = new Intent(this, HcwPortalActivity.class);
+            intent.putExtra("HCW", healthCareUser);
             startActivity(intent);
         } else {
             nfcOutput.setText("Nort bru");

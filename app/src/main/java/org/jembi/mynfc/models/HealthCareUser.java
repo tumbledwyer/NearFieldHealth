@@ -1,6 +1,8 @@
 package org.jembi.mynfc.models;
 
-public class HealthCareUser {
+import java.io.Serializable;
+
+public class HealthCareUser implements Serializable {
     public String Name;
     public String Role;
 }

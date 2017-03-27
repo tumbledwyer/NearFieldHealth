@@ -34,6 +34,13 @@
                 android:resource="@xml/nfc_tech_list" />
         </activity>
         <activity android:name=".ui.HcwPortalActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category." />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
 
         </activity>
     </application>
