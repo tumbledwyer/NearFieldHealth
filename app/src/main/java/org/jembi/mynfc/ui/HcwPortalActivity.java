@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.jembi.mynfc.JsonConverter;
 import org.jembi.mynfc.R;
 import org.jembi.mynfc.models.HealthCareUser;
+import org.jembi.mynfc.models.Patient;
 import org.jembi.mynfc.nfcUtils.NfcReadEvent;
 import org.jembi.mynfc.nfcUtils.NfcReader;
 import org.jembi.mynfc.nfcUtils.NfcToken;
@@ -45,10 +46,11 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
     public void onReadComplete(String data) {
         HealthCareUser healthCareUser = JsonConverter.convertToHealthCareUser(data);
         if(healthCareUser.Role.equals("Patient")){
-            scanPatient.setText("Hello " + healthCareUser.Name);
-            //Intent intent = new Intent(this, HcwPortalActivity.class);
-            //intent.putExtra("HCW", healthCareUser);
-            //startActivity(intent);
+            Patient pat = JsonConverter.convertToPatient(data);
+            //scanPatient.setText("Hello " + healthCareUser.Name);
+            Intent intent = new Intent(this, PatientViewActivity.class);
+            intent.putExtra("Patient", pat);
+            startActivity(intent);
         } else {
             scanPatient.setText("Not a patient");
         }
