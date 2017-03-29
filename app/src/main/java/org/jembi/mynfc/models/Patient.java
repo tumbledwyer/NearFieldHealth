@@ -1,9 +1,9 @@
 package org.jembi.mynfc.models;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Patient extends HealthCareUser{
     public int Age;
     public boolean Married;
-    public List<Immunisation> Immunisations;
+    public ArrayList<Immunisation> Immunisations;
 }
