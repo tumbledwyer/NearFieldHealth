@@ -47,7 +47,6 @@ public class ImmunisationAdapter extends BaseAdapter {
         date.setText(immunisation.Date.toString());
         type.setText(immunisation.Type);
 
-
         return rowView;
     }
 }
