@@ -1,4 +1,4 @@
-package org.jembi.mynfc.nfcUtils;
+package org.jembi.nearFieldHealth.nfcUtils;
 
 import java.io.IOException;
 

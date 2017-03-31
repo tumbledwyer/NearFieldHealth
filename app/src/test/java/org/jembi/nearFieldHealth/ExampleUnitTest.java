@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.nearFieldHealth;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.jembi.mynfc.ui;
+package org.jembi.nearFieldHealth.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +11,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jembi.mynfc.JsonConverter;
-import org.jembi.mynfc.models.HealthCareUser;
-import org.jembi.mynfc.models.Immunisation;
-import org.jembi.mynfc.nfcUtils.NfcReadEvent;
-import org.jembi.mynfc.nfcUtils.NfcReader;
-import org.jembi.mynfc.nfcUtils.NfcToken;
-import org.jembi.mynfc.nfcUtils.NfcWriter;
-import org.jembi.mynfc.R;
-import org.jembi.mynfc.models.Patient;
+import org.jembi.nearFieldHealth.JsonConverter;
+import org.jembi.nearFieldHealth.models.HealthCareUser;
+import org.jembi.nearFieldHealth.nfcUtils.NfcReadEvent;
+import org.jembi.nearFieldHealth.nfcUtils.NfcReader;
+import org.jembi.nearFieldHealth.nfcUtils.NfcToken;
+import org.jembi.nearFieldHealth.nfcUtils.NfcWriter;
+import org.jembi.nearFieldHealth.R;
+import org.jembi.nearFieldHealth.models.Patient;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 

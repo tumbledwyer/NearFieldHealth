@@ -1,4 +1,4 @@
-package org.jembi.mynfc.nfcUtils;
+package org.jembi.nearFieldHealth.nfcUtils;
 
 import android.app.Activity;
 import android.app.PendingIntent;

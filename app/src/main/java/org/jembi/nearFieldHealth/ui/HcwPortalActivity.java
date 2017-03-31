@@ -1,4 +1,4 @@
-package org.jembi.mynfc.ui;
+package org.jembi.nearFieldHealth.ui;
 
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -6,14 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.jembi.mynfc.FileSystem;
-import org.jembi.mynfc.JsonConverter;
-import org.jembi.mynfc.R;
-import org.jembi.mynfc.models.HealthCareUser;
-import org.jembi.mynfc.models.Patient;
-import org.jembi.mynfc.nfcUtils.NfcReadEvent;
-import org.jembi.mynfc.nfcUtils.NfcReader;
-import org.jembi.mynfc.nfcUtils.NfcToken;
+import org.jembi.nearFieldHealth.FileSystem;
+import org.jembi.nearFieldHealth.JsonConverter;
+import org.jembi.nearFieldHealth.R;
+import org.jembi.nearFieldHealth.models.HealthCareUser;
+import org.jembi.nearFieldHealth.models.Patient;
+import org.jembi.nearFieldHealth.nfcUtils.NfcReadEvent;
+import org.jembi.nearFieldHealth.nfcUtils.NfcReader;
+import org.jembi.nearFieldHealth.nfcUtils.NfcToken;
 
 import java.io.IOException;
 

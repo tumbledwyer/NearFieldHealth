@@ -1,4 +1,4 @@
-package org.jembi.mynfc;
+package org.jembi.nearFieldHealth;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.jembi.mynfc.models.Immunisation;
+import org.jembi.nearFieldHealth.models.Immunisation;
 
 import java.util.ArrayList;
 

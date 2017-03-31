@@ -2,13 +2,13 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="patient" type="org.jembi.mynfc.models.Patient"/>
+        <variable name="patient" type="org.jembi.nearFieldHealth.models.Patient"/>
     </data>
     <android.support.constraint.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.jembi.mynfc.ui.PatientViewActivity">
+        tools:context="org.jembi.nearFieldHealth.ui.PatientViewActivity">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addImmunisation"

@@ -1,4 +1,4 @@
-package org.jembi.mynfc.nfcUtils;
+package org.jembi.nearFieldHealth.nfcUtils;
 
 import android.content.Context;
 import android.nfc.FormatException;
@@ -8,8 +8,8 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.widget.Toast;
 
-import org.jembi.mynfc.JsonConverter;
-import org.jembi.mynfc.models.Patient;
+import org.jembi.nearFieldHealth.JsonConverter;
+import org.jembi.nearFieldHealth.models.Patient;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

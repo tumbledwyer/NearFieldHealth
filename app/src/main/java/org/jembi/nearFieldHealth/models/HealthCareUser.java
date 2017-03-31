@@ -1,4 +1,4 @@
-package org.jembi.mynfc.models;
+package org.jembi.nearFieldHealth.models;
 
 import java.io.Serializable;
 

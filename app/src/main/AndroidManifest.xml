@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.jembi.mynfc">
+    package="org.jembi.nearFieldHealth">
 
     <uses-permission android:name="android.permission.NFC" />
 
@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="org.jembi.nearFieldHealth.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_list" />
         </activity>
-        <activity android:name=".ui.HcwPortalActivity">
+        <activity android:name="org.jembi.nearFieldHealth.ui.HcwPortalActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -42,7 +42,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PatientViewActivity"></activity>
+        <activity android:name="org.jembi.nearFieldHealth.ui.PatientViewActivity"></activity>
     </application>
 
 </manifest>

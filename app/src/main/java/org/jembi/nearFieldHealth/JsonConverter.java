@@ -1,9 +1,9 @@
-package org.jembi.mynfc;
+package org.jembi.nearFieldHealth;
 
 import com.google.gson.Gson;
 
-import org.jembi.mynfc.models.HealthCareUser;
-import org.jembi.mynfc.models.Patient;
+import org.jembi.nearFieldHealth.models.HealthCareUser;
+import org.jembi.nearFieldHealth.models.Patient;
 
 public class JsonConverter {
 
