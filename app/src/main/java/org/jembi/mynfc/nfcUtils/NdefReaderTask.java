@@ -7,6 +7,7 @@ import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
@@ -70,7 +71,11 @@ class NdefReaderTask extends AsyncTask<Tag, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {
-            token.write(result);
+            try {
+                token.write(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

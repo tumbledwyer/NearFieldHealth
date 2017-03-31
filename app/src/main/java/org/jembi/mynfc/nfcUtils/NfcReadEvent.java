@@ -1,9 +1,11 @@
 package org.jembi.mynfc.nfcUtils;
 
+import java.io.IOException;
+
 /**
  * Created by barry on 2017/03/24.
  */
 
 public interface NfcReadEvent {
-    void onReadComplete(String data);
+    void onReadComplete(String data) throws IOException;
 }

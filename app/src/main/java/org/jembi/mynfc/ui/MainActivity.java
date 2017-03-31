@@ -21,8 +21,10 @@ import org.jembi.mynfc.nfcUtils.NfcWriter;
 import org.jembi.mynfc.R;
 import org.jembi.mynfc.models.Patient;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
@@ -77,16 +79,13 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
     private Patient GetPatient(){
         Patient patient = new Patient();
+        patient.Id = 123;
         patient.Name = message.getText().toString();
         patient.Married = false;
         patient.Age = 69;
         patient.Role = "Patient";
         patient.Immunisations = new ArrayList<>();
 
-        Immunisation immunisation = new Immunisation();
-        immunisation.Date = new Date();
-        immunisation.Type = "Herpes";
-        patient.Immunisations.add(immunisation);
 
         return patient;
     }
