@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +24,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
-    private TextView nfcOutput;
+    private TextView loginText;
     private NfcAdapter nfcAdapter;
-    Button btnWrite;
-    Context context;
-    TextView message;
     Tag myTag;
+
+    Context context;
+
+    FloatingActionButton btnWrite;
+
     NfcReader nfcReader;
     NfcWriter nfcWriter;
 
@@ -38,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nfcOutput = (TextView) findViewById(R.id.textView_explanation);
-        btnWrite = (Button) findViewById(R.id.writeNfc);
-        message = (TextView) findViewById(R.id.inputBox);
+        loginText = (TextView) findViewById(R.id.textView_explanation);
+        btnWrite = (FloatingActionButton) findViewById(R.id.writeNfc);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         context = this;
@@ -52,16 +53,18 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         if (nfcAdapter == null) {
             // Stop here, we definitely need NFC
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        if (!nfcAdapter.isEnabled()) {
-            nfcOutput.setText("NFC is disabled.");
+            //finish();
+            //return;
         } else {
-            nfcOutput.setText("Waiting for NFC chip...");
+
+            if (!nfcAdapter.isEnabled()) {
+                loginText.setText("NFC is disabled.");
+            } else {
+                loginText.setText("Waiting for NFC chip...");
+            }
         }
 
+        // Just for dev
         btnWrite.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,13 +73,13 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
             }
         });
 
-        nfcReader.handleIntent(getIntent());
+        // nfcReader.handleIntent(getIntent());
     }
 
     private Patient GetPatient(){
         Patient patient = new Patient();
         patient.Id = 123;
-        patient.Name = message.getText().toString();
+        patient.Name = "Sally" + Math.floor(Math.random() * 1000);
         patient.Married = false;
         patient.Age = 69;
         patient.Role = "Patient";
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
          * It's important, that the activity is in the foreground (resumed). Otherwise
          * an IllegalStateException is thrown.
          */
-        nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
     }
 
     @Override
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
-        nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        //nfcReader.stopForegroundDispatch(this, nfcAdapter);
         super.onPause();
     }
 
@@ -111,19 +114,19 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
         myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         nfcWriter.setTag(myTag);
-        nfcReader.handleIntent(intent);
+        // nfcReader.handleIntent(intent);
     }
 
     @Override
     public void onReadComplete(String data) {
         HealthCareUser healthCareUser = JsonConverter.convertToHealthCareUser(data);
         if(healthCareUser.Role.equals("Nurse")){
-            nfcOutput.setText("Hello " + healthCareUser.Name);
+            loginText.setText("Hello " + healthCareUser.Name);
             Intent intent = new Intent(this, HcwPortalActivity.class);
             intent.putExtra("HCW", healthCareUser);
             startActivity(intent);
         } else {
-            nfcOutput.setText("Nort bru");
+            loginText.setText("Nort bru");
         }
     }
 }
