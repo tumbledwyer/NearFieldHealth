@@ -85,7 +85,7 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
          * It's important, that the activity is in the foreground (resumed). Otherwise
          * an IllegalStateException is thrown.
          */
-        nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
-        nfcReader.stopForegroundDispatch(this, nfcAdapter);
+       // nfcReader.stopForegroundDispatch(this, nfcAdapter);
         super.onPause();
     }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jembi.nearFieldHealth.FakeDataFactory;
 import org.jembi.nearFieldHealth.JsonConverter;
 import org.jembi.nearFieldHealth.models.HealthCareUser;
 import org.jembi.nearFieldHealth.nfcUtils.NfcReadEvent;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         {
             @Override
             public void onClick(View v) {
-                nfcWriter.tryWrite(getPatient());
+                nfcWriter.tryWrite(FakeDataFactory.getPatient());
             }
         });
 
@@ -84,24 +85,12 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         {
             @Override
             public void onClick(View v) {
-                Patient patient = getPatient();
+                Patient patient = FakeDataFactory.getPatient();
                 patient.Role = "Nurse";
                 String jatient = JsonConverter.convertToJson(patient);
                 onReadComplete(jatient);
             }
         });
-
-
-    }
-
-    private Patient getPatient(){
-        Patient patient = new Patient();
-        patient.Id = Math.round(Math.random() * 1000);
-        patient.Name = "Sally" + Math.round(Math.random() * 1000);
-        patient.Age = 69;
-        patient.Role = "Patient";
-
-        return patient;
     }
 
     @Override
