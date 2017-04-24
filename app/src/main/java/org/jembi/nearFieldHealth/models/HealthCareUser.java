@@ -3,7 +3,8 @@ package org.jembi.nearFieldHealth.models;
 import java.io.Serializable;
 
 public class HealthCareUser implements Serializable {
-    public int Id;
+    public long Id;
     public String Name;
     public String Role;
+    public int Age;
 }

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
     Context context;
 
-    FloatingActionButton btnWrite;
+
 
     NfcReader nfcReader;
     NfcWriter nfcWriter;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         setContentView(R.layout.activity_main);
 
         loginText = (TextView) findViewById(R.id.textView_explanation);
-        btnWrite = (FloatingActionButton) findViewById(R.id.writeNfc);
+
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         context = this;
@@ -64,27 +64,42 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
             }
         }
 
-        // Just for dev
-        btnWrite.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                nfcWriter.tryWrite(GetPatient());
-            }
-        });
+        setupNfcFakes();
 
         // nfcReader.handleIntent(getIntent());
     }
 
-    private Patient GetPatient(){
+    private void setupNfcFakes(){
+        FloatingActionButton btnWrite = (FloatingActionButton) findViewById(R.id.writeNfc);
+        btnWrite.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                nfcWriter.tryWrite(getPatient());
+            }
+        });
+
+        FloatingActionButton btnRead = (FloatingActionButton) findViewById(R.id.fakeRead);
+        btnRead.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Patient patient = getPatient();
+                patient.Role = "Nurse";
+                String jatient = JsonConverter.convertToJson(patient);
+                onReadComplete(jatient);
+            }
+        });
+
+
+    }
+
+    private Patient getPatient(){
         Patient patient = new Patient();
-        patient.Id = 123;
-        patient.Name = "Sally" + Math.floor(Math.random() * 1000);
-        patient.Married = false;
+        patient.Id = Math.round(Math.random() * 1000);
+        patient.Name = "Sally" + Math.round(Math.random() * 1000);
         patient.Age = 69;
         patient.Role = "Patient";
-        patient.Immunisations = new ArrayList<>();
-
 
         return patient;
     }
@@ -121,12 +136,11 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
     public void onReadComplete(String data) {
         HealthCareUser healthCareUser = JsonConverter.convertToHealthCareUser(data);
         if(healthCareUser.Role.equals("Nurse")){
-            loginText.setText("Hello " + healthCareUser.Name);
             Intent intent = new Intent(this, HcwPortalActivity.class);
             intent.putExtra("HCW", healthCareUser);
             startActivity(intent);
         } else {
-            loginText.setText("Nort bru");
+            Toast.makeText(context, "Not a valid user", Toast.LENGTH_LONG).show();
         }
     }
 }

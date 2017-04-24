@@ -37,7 +37,7 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
         scanPatient = (TextView) findViewById(R.id.scanPatient);
         welcome.setText("Hello " + hcw.Name);
 
-        nfcReader.handleIntent(getIntent());
+        //nfcReader.handleIntent(getIntent());
     }
 
     @Override
@@ -62,12 +62,12 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
     @Override
     protected void onResume() {
         super.onResume();
-        nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
     }
 
     @Override
     protected void onPause() {
-        nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        //nfcReader.stopForegroundDispatch(this, nfcAdapter);
         super.onPause();
     }
 }
