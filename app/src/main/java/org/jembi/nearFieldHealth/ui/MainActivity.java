@@ -13,15 +13,13 @@ import android.widget.Toast;
 
 import org.jembi.nearFieldHealth.FakeDataFactory;
 import org.jembi.nearFieldHealth.JsonConverter;
+import org.jembi.nearFieldHealth.R;
 import org.jembi.nearFieldHealth.models.HealthCareUser;
+import org.jembi.nearFieldHealth.models.Patient;
 import org.jembi.nearFieldHealth.nfcUtils.NfcReadEvent;
 import org.jembi.nearFieldHealth.nfcUtils.NfcReader;
 import org.jembi.nearFieldHealth.nfcUtils.NfcToken;
 import org.jembi.nearFieldHealth.nfcUtils.NfcWriter;
-import org.jembi.nearFieldHealth.R;
-import org.jembi.nearFieldHealth.models.Patient;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
@@ -30,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
     Tag myTag;
 
     Context context;
-
-
 
     NfcReader nfcReader;
     NfcWriter nfcWriter;
@@ -43,13 +39,11 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
         loginText = (TextView) findViewById(R.id.textView_explanation);
 
-
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         context = this;
 
         nfcReader = new NfcReader(new NfcToken(this));
         nfcWriter = new NfcWriter(context);
-
 
         if (nfcAdapter == null) {
             // Stop here, we definitely need NFC

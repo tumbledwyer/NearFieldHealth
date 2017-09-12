@@ -42,9 +42,8 @@ public class ImmunisationAdapter extends BaseAdapter {
         View rowView = inflater.inflate(R.layout.immunisation_list_item, parent, false);
         TextView date = (TextView) rowView.findViewById(R.id.immDate);
         TextView type = (TextView) rowView.findViewById(R.id.immType);
-        TextView hcw = (TextView) rowView.findViewById(R.id.immHcw);
         Immunisation immunisation = (Immunisation) getItem(position);
-        date.setText(immunisation.Date.toString());
+        date.setText(immunisation.Date);
         type.setText(immunisation.Type);
 
         return rowView;

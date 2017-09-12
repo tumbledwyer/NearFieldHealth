@@ -28,6 +28,6 @@ public class FileSystem {
         }
         FileInputStream fileInputStream = context.openFileInput(fileName);
         String buff = new Scanner(fileInputStream).useDelimiter("\\Z").next();
-        return JsonConverter.convertToPatient(buff.toString());
+        return JsonConverter.convertToPatient(buff);
     }
 }

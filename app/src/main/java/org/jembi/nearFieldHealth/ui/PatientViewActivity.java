@@ -24,6 +24,7 @@ import org.jembi.nearFieldHealth.nfcUtils.NfcToken;
 import org.jembi.nearFieldHealth.nfcUtils.NfcWriter;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PatientViewActivity extends AppCompatActivity implements NfcReadEvent {
@@ -113,7 +114,8 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
     public void writeTag(String vaccine) throws IOException {
         Immunisation immunisation = new Immunisation();
         immunisation.Type = vaccine;
-        immunisation.Date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        immunisation.Date = simpleDateFormat.format(new Date());
         patient.Immunisations.add(immunisation);
         FileSystem.write(this, patient);
     }

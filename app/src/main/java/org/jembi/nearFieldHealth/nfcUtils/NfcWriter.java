@@ -34,10 +34,7 @@ public class NfcWriter {
                 write(patient, myTag);
                 Toast.makeText(context, WRITE_SUCCESS, Toast.LENGTH_LONG ).show();
             }
-        } catch (IOException e) {
-            Toast.makeText(context, WRITE_ERROR, Toast.LENGTH_LONG ).show();
-            e.printStackTrace();
-        } catch (FormatException e) {
+        } catch (IOException | FormatException e) {
             Toast.makeText(context, WRITE_ERROR, Toast.LENGTH_LONG ).show();
             e.printStackTrace();
         }
