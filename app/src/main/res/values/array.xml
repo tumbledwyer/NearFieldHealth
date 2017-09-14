@@ -4,5 +4,9 @@
         <item>Polio</item>
         <item>MMR</item>
         <item>Smallpox</item>
+        <item>Tetanus</item>
+        <item>Rabies</item>
+        <item>Tuberculosis</item>
+        <item>Malaria</item>
     </string-array>
 </resources>

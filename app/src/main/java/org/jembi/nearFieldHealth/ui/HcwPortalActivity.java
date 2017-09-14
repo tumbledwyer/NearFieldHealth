@@ -39,11 +39,11 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
         HealthCareUser hcw = (HealthCareUser)intent.getSerializableExtra("HCW");
         TextView welcome = (TextView) findViewById(R.id.welcomeText);
         scanPatient = (TextView) findViewById(R.id.scanPatient);
-        welcome.setText("Hello " + hcw.Name);
+        welcome.setText("Logged in as \n" + hcw.Name);
 
         setupFakes();
 
-        //nfcReader.handleIntent(getIntent());
+        nfcReader.handleIntent(getIntent());
     }
 
     private void setupFakes(){
@@ -76,6 +76,7 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
                 e.printStackTrace();
             }
             Intent intent = new Intent(this, PatientViewActivity.class);
+            patientFile.LastImmunisation = pat.LastImmunisation;
             intent.putExtra("Patient", patientFile);
             startActivity(intent);
         } else {
@@ -86,12 +87,16 @@ public class HcwPortalActivity extends AppCompatActivity implements NfcReadEvent
     @Override
     protected void onResume() {
         super.onResume();
-        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        }
     }
 
     @Override
     protected void onPause() {
-        //nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        }
         super.onPause();
     }
 }

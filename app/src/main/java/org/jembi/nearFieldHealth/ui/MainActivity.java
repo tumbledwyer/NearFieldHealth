@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
 
         setupNfcFakes();
 
-        // nfcReader.handleIntent(getIntent());
+        nfcReader.handleIntent(getIntent());
     }
 
     private void setupNfcFakes(){
@@ -94,7 +94,9 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
          * It's important, that the activity is in the foreground (resumed). Otherwise
          * an IllegalStateException is thrown.
          */
-        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        }
     }
 
     @Override
@@ -102,17 +104,19 @@ public class MainActivity extends AppCompatActivity implements NfcReadEvent {
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
-        //nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        }
         super.onPause();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if(!NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) return;
+        //if(!NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) return;
 
         myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         nfcWriter.setTag(myTag);
-        // nfcReader.handleIntent(intent);
+        nfcReader.handleIntent(intent);
     }
 
     @Override

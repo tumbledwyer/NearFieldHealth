@@ -1,6 +1,7 @@
 package org.jembi.nearFieldHealth.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -34,6 +35,8 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
     private Tag myTag;
     private NfcAdapter nfcAdapter;
     private Patient patient;
+    private boolean canWrite;
+    private ActivityPatientViewBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +44,10 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
         setContentView(R.layout.activity_patient_view);
         Intent intent = getIntent();
         patient = (Patient)intent.getSerializableExtra("Patient");
-        ActivityPatientViewBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_patient_view);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_patient_view);
         binding.setPatient(patient);
 
-        ImmunisationAdapter adapter = new ImmunisationAdapter(this, patient.Immunisations);
-        ListView listView = (ListView) findViewById(R.id.immunisationListView);
-        listView.setAdapter(adapter);
+        refreshView();
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcReader = new NfcReader(new NfcToken(this));
@@ -57,14 +58,19 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
             @Override
             public void onClick(View view){
                 showDialog();
-
             }
         });
     }
 
+    private void refreshView() {
+        ImmunisationAdapter adapter = new ImmunisationAdapter(this, this.patient.Immunisations);
+        ListView listView = (ListView) findViewById(R.id.immunisationListView);
+        listView.setAdapter(adapter);
+    }
+
     private void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("pew pew")
+        builder.setTitle("Select Immunisation")
                 .setItems(R.array.immunisations, new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
                         String vaccine = getResources().getStringArray(R.array.immunisations)[which];
@@ -86,7 +92,9 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
          * It's important, that the activity is in the foreground (resumed). Otherwise
          * an IllegalStateException is thrown.
          */
-        //nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.setupForegroundDispatch(this, nfcAdapter);
+        }
     }
 
     @Override
@@ -94,17 +102,34 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
-       // nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        if(nfcAdapter != null) {
+            nfcReader.stopForegroundDispatch(this, nfcAdapter);
+        }
         super.onPause();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if(!NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) return;
+        //if(!NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) return;
 
         myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         nfcWriter.setTag(myTag);
         nfcReader.handleIntent(intent);
+
+        if(canWrite) {
+            //TODO this is a massive hack that the immunisation list doesn't get saved to the chip
+            Patient newPatient = new Patient();
+            newPatient.Name = patient.Name;
+            newPatient.Role = patient.Role;
+            newPatient.Id = patient.Id;
+            newPatient.LastImmunisation = patient.Immunisations.get(patient.Immunisations.size() - 1);
+
+            if(nfcWriter.tryWrite(newPatient)){
+                patient.LastImmunisation = newPatient.LastImmunisation;
+                canWrite = false;
+                binding.setPatient(patient);
+            }
+        }
     }
 
     @Override
@@ -118,5 +143,8 @@ public class PatientViewActivity extends AppCompatActivity implements NfcReadEve
         immunisation.Date = simpleDateFormat.format(new Date());
         patient.Immunisations.add(immunisation);
         FileSystem.write(this, patient);
+
+        refreshView();
+        canWrite = true;
     }
 }

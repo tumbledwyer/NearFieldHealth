@@ -26,17 +26,20 @@ public class NfcWriter {
         this.context = context;
     }
 
-    public void tryWrite(Patient patient) {
+    public boolean tryWrite(Patient patient) {
         try {
             if(myTag ==null) {
                 Toast.makeText(context, ERROR_DETECTED, Toast.LENGTH_LONG).show();
+                return false;
             } else {
                 write(patient, myTag);
                 Toast.makeText(context, WRITE_SUCCESS, Toast.LENGTH_LONG ).show();
+                return true;
             }
         } catch (IOException | FormatException e) {
             Toast.makeText(context, WRITE_ERROR, Toast.LENGTH_LONG ).show();
             e.printStackTrace();
+            return false;
         }
     }
 

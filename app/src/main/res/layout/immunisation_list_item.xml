@@ -8,19 +8,19 @@
     tools:layout_editor_absoluteX="0dp">
 
     <TextView
-        android:id="@+id/immDate"
+        android:id="@+id/immType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintRight_toLeftOf="@+id/immType"
-        android:layout_marginRight="8dp" />
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/immDate"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/immType"
+        android:id="@+id/immDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"

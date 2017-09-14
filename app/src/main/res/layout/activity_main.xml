@@ -25,13 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:clickable="true"
+        android:visibility="visible"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_compass"
-        android:layout_marginEnd="16dp" />
+        app:srcCompat="@android:drawable/ic_menu_compass" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -41,7 +42,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/jembi"
         app:layout_constraintBottom_toTopOf="@+id/textView_explanation"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.516" />
 
     <TextView
         android:id="@+id/textView2"
@@ -49,24 +51,26 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
-        android:text="Scan to login"
+        android:text="Scan tag to login"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fakeRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginRight="8dp"
         android:clickable="true"
+        android:visibility="invisible"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on"
         app:layout_constraintRight_toLeftOf="@+id/writeNfc"
-        android:layout_marginRight="8dp" />
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 
 </android.support.constraint.ConstraintLayout>
